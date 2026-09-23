@@ -29,7 +29,7 @@ jobs:
         run: npm install
 
       - name: Instalar Android platform
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Crear proyecto Android
         run: npx cap add android

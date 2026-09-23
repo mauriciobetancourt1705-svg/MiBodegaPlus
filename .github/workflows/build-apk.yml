@@ -26,6 +26,9 @@ jobs:
         uses: android-actions/setup-android@v4
       - name: Crear proyecto Android
         run: npx cap add android
+      - name: Habilitar micrófono
+        run: |
+          grep -q 'android.permission.RECORD_AUDIO' android/app/src/main/AndroidManifest.xml || sed -i '/<application/i\    <uses-permission android:name="android.permission.RECORD_AUDIO" />' android/app/src/main/AndroidManifest.xml
       - name: Sincronizar Capacitor
         run: npx cap sync android
       - name: Compilar APK

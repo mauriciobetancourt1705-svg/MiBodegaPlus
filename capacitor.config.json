@@ -1,0 +1,8 @@
+{
+  "appId": "com.mibodegaplus.app",
+  "appName": "MiBodega+",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

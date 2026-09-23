@@ -3,7 +3,7 @@ name: Construir APK MiBodega+
 on:
   workflow_dispatch:
   push:
-    branches: [ "principal", "main" ]
+    branches: ["principal", "main"]
 
 jobs:
   build:

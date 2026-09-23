@@ -1,9 +1,20 @@
 {
-  "name":"aulanova-ia",
-  "version":"1.0.0",
-  "private":true,
-  "description":"AulaNova IA — asistente universitario gratuito, con herramientas académicas y creativas.",
-  "scripts":{"build":"vite build","cap:sync":"npm run build && npx cap sync","android":"npm run cap:sync"},
-  "dependencies":{"@capacitor/android":"^7.4.3","@capacitor/core":"^7.4.3","@capacitor/share":"^7.0.2"},
-  "devDependencies":{"@capacitor/cli":"^7.4.3","vite":"^7.1.5"}
+  "name": "aulanova-ia",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AulaNova IA — copiloto universitario en español con IA online, búsqueda web y herramientas académicas.",
+  "scripts": {
+    "build": "vite build",
+    "cap:sync": "npm run build && npx cap sync",
+    "android": "npm run cap:sync"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/share": "^7.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "vite": "^7.1.5"
+  }
 }

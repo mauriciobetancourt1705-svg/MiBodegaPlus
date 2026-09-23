@@ -1,21 +1,9 @@
 {
-  "name": "mibodega-plus",
-  "version": "1.0.0",
-  "private": true,
-  "description": "MiBodega+ - gestión de bodega y abasto offline",
-  "scripts": {
-    "build": "vite build",
-    "cap:sync": "npm run build && npx cap sync",
-    "android": "npm run cap:sync && npx cap open android"
-  },
-  "dependencies": {
-    "@capacitor/android": "^7.4.3",
-    "@capacitor/core": "^7.4.3",
-    "@capacitor/share": "^7.0.2",
-    "@capacitor-community/bluetooth-le": "^7.0.0"
-  },
-  "devDependencies": {
-    "@capacitor/cli": "^7.4.3",
-    "vite": "^7.1.5"
-  }
+  "name":"aulanova-ia",
+  "version":"1.0.0",
+  "private":true,
+  "description":"AulaNova IA — asistente universitario gratuito, con herramientas académicas y creativas.",
+  "scripts":{"build":"vite build","cap:sync":"npm run build && npx cap sync","android":"npm run cap:sync"},
+  "dependencies":{"@capacitor/android":"^7.4.3","@capacitor/core":"^7.4.3","@capacitor/share":"^7.0.2"},
+  "devDependencies":{"@capacitor/cli":"^7.4.3","vite":"^7.1.5"}
 }

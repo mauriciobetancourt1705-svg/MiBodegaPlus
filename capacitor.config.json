@@ -1,8 +1,6 @@
 {
-  "appId": "com.mibodegaplus.app",
-  "appName": "MiBodega+",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https"
-  }
+  "appId":"com.aulanova.estudiante",
+  "appName":"AulaNova IA",
+  "webDir":"www",
+  "server":{"androidScheme":"https"}
 }

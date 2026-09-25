@@ -130,7 +130,8 @@ async function barcode(){
 function findBarcode(code){let p=db.products.find(x=>x.barcode===code);if(p){state.q=p.name;state.cat="Todos";go("caja");add(p.id)}else{state.q=code;go("inventario");toast("Código no registrado. Puedes crear el producto.")}
 }
 function discount(){let sub=state.cart.reduce((a,i)=>a+i.price*i.qty,0),v=prompt("Descuento en USD:",state.discount||0);if(v!==null)state.discount=Math.min(sub,Math.max(0,Number(v)||0));render()}
-function customerPick(){modal('<h2>Cliente</h2><div class="list">'+('<button class="row menu-row" onclick="selectCustomer(null)"><b>Consumidor final</b></button>')+db.customers.map(c=>'<button class="row menu-row" onclick="selectCustomer('+c.id+')"><div class="grow"><b>'+esc(c.name)+'</b><small>'+esc(c.phone||"")+'</small></div></button>').join("")+'</div><button class="btn" onclick="customerEdit();">+ Nuevo cliente</button>')}\nfunction selectCustomer(cid){state.customerId=cid;close();render()}
+function customerPick(){modal('<h2>Cliente</h2><div class="list">'+('<button class="row menu-row" onclick="selectCustomer(null)"><b>Consumidor final</b></button>')+db.customers.map(c=>'<button class="row menu-row" onclick="selectCustomer('+c.id+')"><div class="grow"><b>'+esc(c.name)+'</b><small>'+esc(c.phone||"")+'</small></div></button>').join("")+'</div><button class="btn" onclick="customerEdit();">+ Nuevo cliente</button>')}
+function selectCustomer(cid){state.customerId=cid;close();render()}
 function checkout(){
   if(!state.cart.length)return toast("Agrega productos");
   let sub=state.cart.reduce((a,i)=>a+i.price*i.qty,0),discount=Math.min(sub,state.discount||0),total=sub-discount;

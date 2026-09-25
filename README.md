@@ -39,3 +39,8 @@ Puedes compilar la APK desde un teléfono Android usando GitHub:
 4. GitHub ejecutará automáticamente `.github/workflows/build-apk.yml`.
 5. En el repositorio entra a **Actions**, abre la ejecución y descarga el artefacto `MiBodegaPlus-debug-apk`.
 6. Descomprime el artefacto y tendrás `app-debug.apk`.
+
+## 🔧 Compilación iniciada desde GitHub Codespaces
+Este proyecto también incluye un flujo de GitHub Actions para instalar dependencias,
+generar Android con Capacitor y compilar el APK debug en la nube. El resultado se
+publica como artefacto de la ejecución para poder descargarlo desde un teléfono.

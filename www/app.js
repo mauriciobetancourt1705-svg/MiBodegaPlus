@@ -20,7 +20,8 @@ function load(){
 }
 function save(){localStorage.setItem(DB_KEY,JSON.stringify(db))}
 function id(){return Date.now()+Math.floor(Math.random()*999)}
-function $$(s){return document.querySelector(s)}
+function $(s){return document.querySelector(s)}
+function $(s){return document.querySelectorAll(s)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function money(n){return "$"+Number(n||0).toFixed(2)}
 function bs(n){return "Bs. "+(Number(n||0)*Number(db.settings.rate||0)).toLocaleString("es-VE",{minimumFractionDigits:2,maximumFractionDigits:2})}

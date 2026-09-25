@@ -16,6 +16,8 @@ jobs:
       - run: node --check www/app.js
       - run: npx cap add android && npx cap sync android
       - working-directory: android
+        run: sed -i 's/minSdkVersion = [0-9]*/minSdkVersion = 26/' variables.gradle || true
+      - working-directory: android
         run: chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:

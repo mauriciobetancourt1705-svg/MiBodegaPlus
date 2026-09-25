@@ -32,11 +32,11 @@ function stock(p){return p.stock<=0?'<span class="stock out">Agotado</span>':p.s
 function header(){return '<header class="top"><div><div class="brand">Café Criollo</div><small class="muted">'+(navigator.onLine?"● Online":"● Offline")+' · '+esc(db.settings.rateSource)+' · '+db.settings.rate+' Bs/$</small></div><button class="icon-btn" onclick="settings()">⚙️</button></header>'}
 function search(){return '<div class="searchbar">⌕<input id="q" value="'+esc(state.q)+'" placeholder="Buscar producto..."><button onclick="onlineSearch()">🌐</button><button onclick="barcode()">▣</button></div>'}
 function chips(){let cs=["Todos",...new Set(db.products.map(p=>p.cat))];return '<div class="tabs">'+cs.map(c=>'<button class="chip '+(state.cat===c?"on":"")+'" onclick="cat('+JSON.stringify(c)+')">'+esc(c)+'</button>').join("")+"</div>"}
-function card(p){return '<article class="card"><div class="photo">'+img(p)+'</div><div class="card-body"><div class="name">'+esc(p.name)+'</div>'+stock(p)+'<div class="price">'+money(p.price)+'</div><div class="secondary">'+bs(p.price)+'</div></div><button class="add" onclick="add('+p.id+')">+</button></article>"}
+function card(p){return '<article class="card"><div class="photo">'+img(p)+'</div><div class="card-body"><div class="name">'+esc(p.name)+'</div>'+stock(p)+'<div class="price">'+money(p.price)+'</div><div class="secondary">'+bs(p.price)+'</div></div><button class="add" onclick="add('+p.id+')">+</button></article>'}
 function caja(){
   let ps=db.products.filter(p=>(state.cat==="Todos"||p.cat===state.cat)&&((p.name+" "+(p.barcode||"")).toLowerCase().includes(state.q.toLowerCase())));
   let low=db.products.filter(p=>p.stock<=p.min&&p.stock>0).length;
-  return search()+(low?'<div class="notice">⚠️ '+low+' productos con stock bajo · <button onclick="go(\\'inventario\\')">Revisar</button></div>':"")+chips()+'<main class="grid">'+(ps.length?ps.map(card).join(""):'<div class="empty">No hay coincidencias.</div>')+'</main><button class="fab" onclick="go(\\'carrito\\')">🛒 '+state.cart.reduce((a,i)=>a+i.qty,0)+"</button>";
+  return search()+(low?'<div class="notice">⚠️ '+low+' productos con stock bajo · <button onclick="go(\'inventario\')">Revisar</button></div>':"")+chips()+'<main class="grid">'+(ps.length?ps.map(card).join(""):'<div class="empty">No hay coincidencias.</div>')+'</main><button class="fab" onclick="go(\'carrito\')">🛒 '+state.cart.reduce((a,i)=>a+i.qty,0)+"</button>";
 }
 function carrito(){
   let sub=state.cart.reduce((a,i)=>a+i.price*i.qty,0),discount=Math.min(sub,Math.max(0,state.discount||0)),total=sub-discount;
@@ -79,7 +79,7 @@ function perfil(){
   menu("⚙️","Configuración","Tasa, negocio y preferencias","settings")+
   '<div class="row"><div class="grow"><b>Modo</b><br><small>'+ (navigator.onLine?"Internet disponible":"Sin Internet · los datos siguen locales")+'</small></div></div></div></section>';
 }
-function menu(icon,title,sub,target){return '<button class="menu-row" onclick="go(\\''+target+'\\')"><span class="menu-icon">'+icon+'</span><span class="grow"><b>'+title+'</b><small>'+sub+'</small></span><b>›</b></button>'}
+function menu(icon,title,sub,target){return '<button class="menu-row" onclick="go(\''+target+'\')"><span class="menu-icon">'+icon+'</span><span class="grow"><b>'+title+'</b><small>'+sub+'</small></span><b>›</b></button>'}
 function cajaAdmin(){
   let sales=db.sales.filter(s=>s.date.slice(0,10)===new Date().toISOString().slice(0,10)).reduce((a,s)=>a+s.total,0),exp=db.expenses.filter(e=>e.date.slice(0,10)===new Date().toISOString().slice(0,10)).reduce((a,e)=>a+e.amount,0);
   return '<section class="section"><h2>Caja</h2><div class="stat-grid"><div class="stat"><small>Estado</small><b>'+(db.cash.opened?"Abierta":"Cerrada")+'</b></div><div class="stat"><small>Ventas</small><b>'+money(sales)+'</b></div></div>'+(db.cash.opened?'<div class="notice">Apertura: '+money(db.cash.opening)+' · Esperado: '+money(db.cash.opening+sales-exp)+'</div><div class="actions"><button class="btn primary" onclick="cashMove()">Entrada/Salida</button><button class="btn" onclick="closeCash()">Cerrar caja</button></div>':'<button class="btn primary" onclick="openCash()">Abrir caja</button>')+'<h3>Movimientos</h3><div class="list">'+db.expenses.slice(-8).reverse().map(e=>'<div class="row"><div class="grow">'+esc(e.category)+'</div><b>'+money(e.amount)+'</b></div>').join("")+'</div></section>';
@@ -90,7 +90,7 @@ function catalogo(){
 function backup(){
   return '<section class="section"><h2>Respaldo y datos</h2><div class="notice">Los datos actuales se guardan localmente en el teléfono. Exporta periódicamente un respaldo.</div><div class="actions"><button class="btn primary" onclick="exportData()">⬇️ Exportar JSON</button><button class="btn" onclick="exportCSV()">📊 Exportar CSV</button><button class="btn" onclick="importData()">⬆️ Importar JSON</button></div><h3>Auditoría reciente</h3><div class="list">'+db.audit.slice(-12).reverse().map(a=>'<div class="row"><div class="grow"><b>'+esc(a.action)+'</b><br><small>'+new Date(a.date).toLocaleString("es-VE")+' · '+esc(a.detail)+'</small></div></div>').join("")+'</div></section>';
 }
-function bottom(){return '<nav class="bottom">'+[[ "caja","🧾","Caja"],["inventario","▣","Inventario"],["reportes","▥","Reportes"],["perfil","♙","Más"]].map(n=>'<button class="nav '+(state.screen===n[0]?"active":"")+'" onclick="go(\\''+n[0]+'\\')"><span>'+n[1]+'</span>'+n[2]+'</button>').join("")+"</nav>"}
+function bottom(){return '<nav class="bottom">'+[[ "caja","🧾","Caja"],["inventario","▣","Inventario"],["reportes","▥","Reportes"],["perfil","♙","Más"]].map(n=>'<button class="nav '+(state.screen===n[0]?"active":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+'</span>'+n[2]+'</button>').join("")+"</nav>"}
 function render(){
   let body={caja,inventario,clientes,proveedores,compras,gastos,reportes,perfil,catalogo,"caja-admin":cajaAdmin,printer:printer,backup:backup,settings:settingsView}[state.screen]||caja;
   $("#app").innerHTML='<div class="app">'+header()+body()+bottom()+"</div>";
@@ -120,7 +120,7 @@ async function onlineSearch(){
   }catch(e){toast("Sin conexión para búsqueda online.")}
 }
 function useOnline(i){let p=window.results[i];db.products.push({id:id(),name:p.product_name||"Producto",price:0,cost:0,stock:0,min:3,cat:(p.categories||"General").split(",")[0].trim(),image:p.image_front_url||"",barcode:p.code||""});save();log("Producto importado",p.product_name||"");close();go("inventario")}
-async async function barcode(){
+async function barcode(){
   if("BarcodeDetector" in window){
     toast("Lector de cámara disponible en este dispositivo; si no aparece, escribe el código.");
   }

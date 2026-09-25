@@ -109,7 +109,7 @@ function edit(pid){
 }
 function field(label,key,val,type="text"){return '<div class="field"><label>'+label+'</label><input id="'+key+'" type="'+type+'" value="'+esc(val)+'"></div>'}
 function saveProduct(){
-  let p=state.editing,Object.assign(p,{name:$("#n").value.trim()||"Producto",barcode:$("#bc").value.trim(),price:Number($("#pr").value)||0,cost:Number($("#co").value)||0,stock:Number($("#st").value)||0,min:Number($("#mi").value)||0,cat:$("#ca").value.trim()||"General",image:$("#im").value.trim()});
+  let p=state.editing; Object.assign(p,{name:$("#n").value.trim()||"Producto",barcode:$("#bc").value.trim(),price:Number($("#pr").value)||0,cost:Number($("#co").value)||0,stock:Number($("#st").value)||0,min:Number($("#mi").value)||0,cat:$("#ca").value.trim()||"General",image:$("#im").value.trim()});
   if(!db.products.some(x=>x.id===p.id))db.products.push(p);save();log("Producto actualizado",p.name);close();render();toast("Producto guardado");
 }
 async function onlineSearch(){

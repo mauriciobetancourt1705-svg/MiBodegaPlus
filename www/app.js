@@ -121,20 +121,11 @@ async function onlineSearch(){
 }
 function useOnline(i){let p=window.results[i];db.products.push({id:id(),name:p.product_name||"Producto",price:0,cost:0,stock:0,min:3,cat:(p.categories||"General").split(",")[0].trim(),image:p.image_front_url||"",barcode:p.code||""});save();log("Producto importado",p.product_name||"");close();go("inventario")}
 async async function barcode(){
-  try{
-    const mod=await import("@capacitor/barcode-scanner");
-    const scanner=mod.CapacitorBarcodeScanner;
-    const r=await scanner.scanBarcode({scanInstructions:"Enfoca el código",android:{scanningLibrary:"zxing"}});
-    const code=r?.ScanResult||r?.content;
-    if(code)findBarcode(code);
-  }catch(e){
-    if("BarcodeDetector" in window){
-      toast("Escáner web disponible; si no abre la cámara, usa el lector Android.");
-    }else{
-      const code=prompt("Código de barras:","");
-      if(code)findBarcode(code);
-    }
+  if("BarcodeDetector" in window){
+    toast("Lector de cámara disponible en este dispositivo; si no aparece, escribe el código.");
   }
+  const code=prompt("Código de barras:","");
+  if(code)findBarcode(code);
 }
 function findBarcode(code){let p=db.products.find(x=>x.barcode===code);if(p){state.q=p.name;state.cat="Todos";go("caja");add(p.id)}else{state.q=code;go("inventario");toast("Código no registrado. Puedes crear el producto.")}
 }
